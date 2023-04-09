@@ -25,6 +25,7 @@ h2 {
 p {
     line-height: 1.5rem;
 }
+
 .highscore {
 float: left;
 }
@@ -46,6 +47,7 @@ float: right;
 .start-quiz-page {
     align-self: center;
 }
+
 .btn-start {
     margin-top: 1rem;
     padding: 1rem 2rem;
@@ -53,7 +55,23 @@ float: right;
     border-radius: 1rem;
     background-color: brown;
 }
+
 .btn-start:hover {
+    background-color: darkgrey;
+    transition: .4s;
+}
+
+.score {
+    margin-bottom: 1rem;
+    margin-right: 13rem;
+}
+
+.submit {
+    background-color: brown;
+    border-radius: 5px;
+}
+
+.submit:hover {
     background-color: darkgrey;
     transition: .4s;
 }
