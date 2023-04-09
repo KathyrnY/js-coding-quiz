@@ -7,8 +7,10 @@
     <title>JS Coding Quiz</title>
     <link rel="stylesheet" href="assets/style.css"
 </head>
+
 <body>
-    <header class="header">
+    <!-- Start Page  shown as first page upon loading page -->
+    <header class="header" id="start-page">
         <div class="highscore">View Highscores</div>
         <div class="timer">Time: </div>
     </header>
@@ -21,6 +23,24 @@
             <button class="btn-start" type="button">Start Game</button>
         </div>
     </section>
+
+    <!-- Game page laods after clicking start -->
+    <section>
+    <div id="game-page">
+        <div class="game-page-title"></div>
+        <div class="quiz-selection"></div>
+        <span class="correct-incorrect"></span>
+    </div>
+    </section>
+
+    <!-- Loads after game is complete -->
+    <form>
+        <div class="end-game"></div>
+        <h2>Game Ended</h2>
+        <div>Initials:</div>
+        <div class="score"></div>
+        <input type="text" id="initials" />
+    </form>
 
 
     <script src="assets/script.js"></script>
