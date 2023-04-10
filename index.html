@@ -5,17 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Coding Quiz</title>
-    <link rel="stylesheet" href="assets/style.css"
+    <link rel="stylesheet" href="./assets/style.css"
 </head>
 
 <body>
     <!-- Start Page  shown as first page upon loading page -->
     <header class="header" id="start-page">
         <div class="highscore">View Highscores</div>
-        <div class="timer">Time: </div>
+        <div class="timer"></div>
     </header>
     <section>
-        <div class="start-quiz-page">
+        <div class="start-quiz-page" id="info-page">
             <div class="quiz-info">
                 <h2>Coding Quiz Challenge</h2>
                 <p> Try to answer the following code-related questions within the time limit. <br> Keep in mind that incorrect answers will penalize your scoretime by 10 seconds </p>
@@ -35,7 +35,7 @@
 
     <!-- Loads after game is complete -->
     <form>
-    <div class="end-game">
+    <div id="end-game">
         <h2>Game Ended</h2>
         <div class="score">Your final score is</div>
         <label>Enter Initials:</label>
@@ -45,6 +45,6 @@
     </form>
 
 
-    <script src="assets/script.js"></script>
+    <script src="./assets/script.js"></script>
     </body>
 </html>
