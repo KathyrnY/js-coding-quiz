@@ -25,7 +25,7 @@ var finalScore = document.querySelector(".score");
 var inputInitials = document.querySelector("#initials");
 var submitBtn = document.querySelector(".submit");
 
-// Timer
+//Reset
 function init() {
     startScreen();
 }
@@ -63,13 +63,17 @@ var questions = [
     },
 ];
 
+for (var i = 0; i < questions.length; i++) {
+    questEl.textContent
+}
+
 // Show and hide screens
 function startScreen() {
     startEl.style.display = "block";
     startPage.style.display = "block";
     gameEl.style.display = "none";
     endEl.style.display = "none";
-    nextBtn.style.display = "none";
+    // nextBtn.style.display = "none";
     seconds = 80;
 }
 
@@ -79,7 +83,7 @@ function gameScreen() {
     gameEl.style.display = "block";
     questEl.style.display = "block";
     endEl.style.display = "none";
-    nextBtn.style.display = "block";
+    // nextBtn.style.display = "block";
     showChoice();
     showQuestion();
     setTime();
@@ -136,13 +140,16 @@ function setTime() {
         // Show Question function
         var showQuestion = function () {
             var quest = document.createElement('h4');
-            questEl.appendChild(quest);
-            quest.textContent = questions[questionIndex].question
+            var currentQuest = questions[questionIndex].question
+            quest.textContent = currentQuest
+            // questEl.textContent = quest;
+            
             }
         // }
         // Show Next Question Function
         function nextQuestion() {
             if (questionIndex < questions.length) {
+                questionIndex ++;
                 showQuestion();
             } else {
                 clearInterval(timerInterval);
@@ -151,14 +158,16 @@ function setTime() {
             }
         // Show choices Function
         var showChoice = function () {
-            // choicesEl.innerHTML = "";
+            choicesEl.innerHTML = "";
             var choice = document.createElement('p');
-            choicesEl.appendChild(choice);
+            choice.setAttribute("class", "choiceBtn");
+            choicesEl.textContent = choice;
             choice.textContent = questions[questionIndex].choices
+            choice.addEventListener("click", nextQuestion);
             };
 
             // Event Listener for Next Button
-                nextBtn.addEventListener("click", nextQuestion);
+
 
             // Local Storage 
             function submitScore(event) {
