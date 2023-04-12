@@ -13,7 +13,10 @@ var startBtn = document.querySelector(".btn-start");
 // Game page variables
 var gameEl = document.querySelector("#game-page");
 var titleEl = document.querySelector(".game-page-title");
+var questEl = document.querySelector(".quiz-question");
+var choicesEl = document.querySelector(".quiz-choices");
 var rightOrWrong = document.querySelector(".correct-incorrect");
+var nextBtn = document.querySelector("#next-btn");
 var questionIndex = 0;
 
 // End page variables
@@ -23,6 +26,9 @@ var inputInitials = document.querySelector("#initials");
 var submitBtn = document.querySelector(".submit");
 
 // Timer
+function init() {
+    startScreen();
+}
 
 // Question Array
 var questions = [
@@ -62,7 +68,8 @@ function startScreen() {
     startEl.style.display = "block";
     startPage.style.display = "block";
     gameEl.style.display = "none";
-    endEl.stlye.display = "none";
+    endEl.style.display = "none";
+    nextBtn.style.display = "none";
     seconds = 80;
 }
 
@@ -70,8 +77,12 @@ function gameScreen() {
     startEl.style.display = "block";
     startPage.style.display = "none";
     gameEl.style.display = "block";
-    endEl.stlye.display = "none";
-
+    questEl.style.display = "block";
+    endEl.style.display = "none";
+    nextBtn.style.display = "block";
+    showChoice();
+    showQuestion();
+    setTime();
 }
 
 function endScreen() {
@@ -79,18 +90,17 @@ function endScreen() {
     startPage.style.display = "none";
     gameEl.style.display = "none";
     endEl.stlye.display = "block";
+    nextBtn.style.display = "none";
 }
 
 // Event Listener for button
-startBtn.addEventListener("click", setTime);
-startBtn.addEventListener("click", gameScreen);
-submitBtn.addEventListener("click", );
+startBtn.addEventListener("click", gameScreen, setTime);
 
 // Timer
 function showTimeLeft() {
     timeEl.textContent = "Time: " + seconds;
 }
-
+// Times Up Message
 function sendMessage() {
     timeEl.textContent = "Times Up";
 }
@@ -122,8 +132,48 @@ function setTime() {
         }
             
         }
-        // 
 
-        function 
+        // Show Question function
+        var showQuestion = function () {
+            var quest = document.createElement('h4');
+            questEl.appendChild(quest);
+            quest.textContent = questions[questionIndex].question
+            }
+        // }
+        // Show Next Question Function
+        function nextQuestion() {
+            if (questionIndex < questions.length) {
+                showQuestion();
+            } else {
+                clearInterval(timerInterval);
+                endScreen();
+                }
+            }
+        // Show choices Function
+        var showChoice = function () {
+            // choicesEl.innerHTML = "";
+            var choice = document.createElement('p');
+            choicesEl.appendChild(choice);
+            choice.textContent = questions[questionIndex].choices
+            };
 
+            // Event Listener for Next Button
+                nextBtn.addEventListener("click", nextQuestion);
 
+            // Local Storage 
+            function submitScore(event) {
+                event.preventDefault();
+                var storedScores = JSON.parse(localStorage.getItm("highScore")) || [];
+                var finalizedScores = stored.concat({
+                });
+                localStorage.setItem("highScore", JSON.stringify(finalizedScores));
+
+            }
+
+            function showHighScores() {
+                var highScore = localStorage.getItem("highScores");
+                showHighScores.textContent = highScore;
+                finalScore.textContent = seconds;
+            }
+                submitBtn.addEventListener("click", submitBtn, submitScore);
+            init();
