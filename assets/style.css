@@ -15,6 +15,10 @@ header {
 div {
     text-align: center;
 }
+div p {
+    color: blue;
+    border: 10px;
+}
 
 button {
     text-align: center;
@@ -80,4 +84,8 @@ float: right;
     transition: .4s;
 }
 
-
+div newChoice {
+background-color: red;
+color: blue;
+margin: 1rem;
+}

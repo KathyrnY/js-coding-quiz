@@ -1,6 +1,6 @@
 // Start page header variables
 var startEl = document.querySelector("#start-page");
-var displayScores = document.querySelector(".highscore");
+var highScoresEl = document.querySelector(".highscore");
 var timeEl = document.querySelector(".timer");
 var seconds = 80;
 var timerInterval;
@@ -22,6 +22,8 @@ var questionIndex = 0;
 // End page variables
 var endEl = document.querySelector("#end-game");
 var finalScore = document.querySelector(".score");
+var score = 0;
+// var storedScore = JSON.parse(localStorage.getItem("score")) || [];
 var inputInitials = document.querySelector("#initials");
 var submitBtn = document.querySelector(".submit");
 
@@ -63,9 +65,9 @@ var questions = [
     },
 ];
 
-for (var i = 0; i < questions.length; i++) {
-    questEl.textContent
-}
+// for (var i = 0; i < questions.length; i++) {
+//     questEl.textContent
+// }
 
 // Show and hide screens
 function startScreen() {
@@ -87,22 +89,27 @@ function gameScreen() {
     showChoice();
     showQuestion();
     setTime();
+    checkSelection();
 }
 
 function endScreen() {
     startEl.style.display = "block";
     startPage.style.display = "none";
     gameEl.style.display = "none";
-    endEl.stlye.display = "block";
-    nextBtn.style.display = "none";
+    endEl.style.display = "block";
+    // nextBtn.style.display = "none";
 }
 
 // Event Listener for button
 startBtn.addEventListener("click", gameScreen, setTime);
 
-// Timer
+// Time Display
 function showTimeLeft() {
     timeEl.textContent = "Time: " + seconds;
+}
+
+function showRemainder() {
+    timeEl.textContent = seconds;
 }
 // Times Up Message
 function sendMessage() {
@@ -113,76 +120,76 @@ function setTime() {
     showTimeLeft();
         timerInterval = setInterval(function() {
         seconds--;
-
+            checkSelection();
         showTimeLeft();
 
         if (seconds === 0) {
             // Stops execution of action at set interval below--
             clearInterval(timerInterval);
-            sendMessage();
             endScreen();
+            sendMessage();
         }
     }, 1000);
 
     }
     // Checks answer to see if it's right
-    function checkSelection(choices) {
+    function checkSelection() {
         var correctChoices = questions[questionIndex].correct;
-        if (choices == correctChoices) {
-            rightOrWrong.textContent = "Incorrect!";
-            seconds -= 10;
+        if (choicesEl === correctChoices) {
+            rightOrWrong.textContent = "Correct!";
         } else {
-            rightOrWrong.textContent = "Correct!"
+            rightOrWrong.textContent = "Incorrect!"
+            seconds -= 10;
         }
-            
         }
-
+// TA helped showQuestion, nextQuestion and showChoice
         // Show Question function
         var showQuestion = function () {
-            var quest = document.createElement('h4');
-            var currentQuest = questions[questionIndex].question
-            quest.textContent = currentQuest
-            // questEl.textContent = quest;
-            
-            }
-        // }
+            var currentQuest = questions[questionIndex].question;
+            questEl.textContent = currentQuest;
+          };
+
         // Show Next Question Function
         function nextQuestion() {
             if (questionIndex < questions.length) {
-                questionIndex ++;
-                showQuestion();
+              questionIndex++;
+              showQuestion();
+              showChoice();
             } else {
-                clearInterval(timerInterval);
-                endScreen();
-                }
+              clearInterval(timerInterval);
+              endScreen();
             }
+          }
         // Show choices Function
+         // TA and Sub Instuctor helped with code  below
         var showChoice = function () {
             choicesEl.innerHTML = "";
-            var choice = document.createElement('p');
-            choice.setAttribute("class", "choiceBtn");
-            choicesEl.textContent = choice;
-            choice.textContent = questions[questionIndex].choices
-            choice.addEventListener("click", nextQuestion);
-            };
-
-            // Event Listener for Next Button
-
-
-            // Local Storage 
-            function submitScore(event) {
-                event.preventDefault();
-                var storedScores = JSON.parse(localStorage.getItm("highScore")) || [];
-                var finalizedScores = stored.concat({
-                });
-                localStorage.setItem("highScore", JSON.stringify(finalizedScores));
-
+            for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+                var newChoice = document.createElement("div");
+                choicesEl.appendChild(newChoice);
+                var choiceBtn = document.createElement("button");
+                choiceBtn.textContent = questions[questionIndex].choices[i];
+                choicesEl.appendChild(choiceBtn);
             }
+            choicesEl.addEventListener("click", nextQuestion);
+            checkSelection();
+          }
+  
+          function showScore() {
+            var finishedScore = JSON.parse(localStorage.getItem("highScore"))
+            var createLi = document.createElement("li");
+            createLi.textContent = finishedScore.highScore.initials  + " : " + finishedScore.score;
+            endEl.appendChild(createLi);
+            highScoreEl();
+          }
 
-            function showHighScores() {
-                var highScore = localStorage.getItem("highScores");
-                showHighScores.textContent = highScore;
-                finalScore.textContent = seconds;
+
+          var highScoreEl = function() {
+            var highScore = {
+                initials: inputInitials.value,
+                score: seconds
             }
-                submitBtn.addEventListener("click", submitBtn, submitScore);
+            localStorage.setItem("highScore", (JSON.stringify(highScore)))
+          }
+          submitBtn.addEventListener("click", showScore);
             init();
