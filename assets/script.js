@@ -29,40 +29,44 @@ var submitBtn = document.querySelector(".submit");
 
 //Reset
 function init() {
-    startScreen();
+  startScreen();
 }
 
 // Question Array
 var questions = [
-    {
-        question: "Which of the following adds an item to an array?",
-        choices: ["push", "pop", "round", "length"],
-        correct: "push",
-    },
+  {
+    question: "Which of the following adds an item to an array?",
+    choices: ["push", "pop", "round", "length"],
+    correct: "push",
+  },
 
-    {
-        question: "What can be used to declare a variable and the value can be changed at a later time within the JavaScript code?",
-        choices: ["const", "let", "var", "length"],
-        correct: "var",
-    },
+  {
+    question:
+      "What can be used to declare a variable and the value can be changed at a later time within the JavaScript code?",
+    choices: ["const", "let", "var", "length"],
+    correct: "var",
+  },
 
-    {
-        question: "What does it mean when a variable has been declared but a value has not yet been assigned to that variable?",
-        choices: ["null", "undefined", "undeclared", "length"],
-        correct: "undefined",
-    },
+  {
+    question:
+      "What does it mean when a variable has been declared but a value has not yet been assigned to that variable?",
+    choices: ["null", "undefined", "undeclared", "length"],
+    correct: "undefined",
+  },
 
-    {
-        question: "The document comes under the windows object and can also be considered as it's what?",
-        choices: ["const", "let", "method", "property"],
-        correct: "property",
-    },
+  {
+    question:
+      "The document comes under the windows object and can also be considered as it's what?",
+    choices: ["const", "let", "method", "property"],
+    correct: "property",
+  },
 
-    {
-        question: "What method rounds a value to the nearest integar and then returns it",
-        choices: ["length", "round", "date", "concat"],
-        correct: "round",
-    },
+  {
+    question:
+      "What method rounds a value to the nearest integar and then returns it",
+    choices: ["length", "round", "date", "concat"],
+    correct: "round",
+  },
 ];
 
 // for (var i = 0; i < questions.length; i++) {
@@ -71,33 +75,32 @@ var questions = [
 
 // Show and hide screens
 function startScreen() {
-    startEl.style.display = "block";
-    startPage.style.display = "block";
-    gameEl.style.display = "none";
-    endEl.style.display = "none";
-    // nextBtn.style.display = "none";
-    seconds = 80;
+  startEl.style.display = "block";
+  startPage.style.display = "block";
+  gameEl.style.display = "none";
+  endEl.style.display = "none";
+  // nextBtn.style.display = "none";
+  seconds = 80;
 }
 
 function gameScreen() {
-    startEl.style.display = "block";
-    startPage.style.display = "none";
-    gameEl.style.display = "block";
-    questEl.style.display = "block";
-    endEl.style.display = "none";
-    // nextBtn.style.display = "block";
-    showChoice();
-    showQuestion();
-    setTime();
-    checkSelection();
+  startEl.style.display = "block";
+  startPage.style.display = "none";
+  gameEl.style.display = "block";
+  questEl.style.display = "block";
+  endEl.style.display = "none";
+  // nextBtn.style.display = "block";
+  showChoice();
+  showQuestion();
+  setTime();
 }
 
 function endScreen() {
-    startEl.style.display = "block";
-    startPage.style.display = "none";
-    gameEl.style.display = "none";
-    endEl.style.display = "block";
-    // nextBtn.style.display = "none";
+  startEl.style.display = "block";
+  startPage.style.display = "none";
+  gameEl.style.display = "none";
+  endEl.style.display = "block";
+  // nextBtn.style.display = "none";
 }
 
 // Event Listener for button
@@ -105,91 +108,96 @@ startBtn.addEventListener("click", gameScreen, setTime);
 
 // Time Display
 function showTimeLeft() {
-    timeEl.textContent = "Time: " + seconds;
+  timeEl.textContent = "Time: " + seconds;
 }
 
 function showRemainder() {
-    timeEl.textContent = seconds;
+  timeEl.textContent = seconds;
 }
 // Times Up Message
 function sendMessage() {
-    timeEl.textContent = "Times Up";
+  timeEl.textContent = "Times Up";
 }
 
 function setTime() {
-    showTimeLeft();
-        timerInterval = setInterval(function() {
-        seconds--;
-            checkSelection();
-        showTimeLeft();
-
-        if (seconds === 0) {
-            // Stops execution of action at set interval below--
-            clearInterval(timerInterval);
-            endScreen();
-            sendMessage();
-        }
-    }, 1000);
-
+  showTimeLeft();
+  timerInterval = setInterval(function () {
+    seconds--;
+    showTimeLeft()
+    
+    if (seconds < 1) {
+      // Stops execution of action at set interval below--
+      clearInterval(timerInterval);
+      endScreen();
+      sendMessage();
     }
-    // Checks answer to see if it's right
-    function checkSelection() {
-        var correctChoices = questions[questionIndex].correct;
-        if (choicesEl === correctChoices) {
-            rightOrWrong.textContent = "Correct!";
-        } else {
-            rightOrWrong.textContent = "Incorrect!"
-            seconds -= 10;
-        }
-        }
-// TA helped showQuestion, nextQuestion and showChoice
-        // Show Question function
-        var showQuestion = function () {
-            var currentQuest = questions[questionIndex].question;
-            questEl.textContent = currentQuest;
-          };
+  }, 1000);
+}
+// Checks answer to see if it's right and tutor David helped me modify this code
+function checkSelection(event) {
+  var clickedBtn = event.target;
+  var textFromBtn = clickedBtn.textContent;
+  var correctChoice = questions[questionIndex].correct;
+  if (textFromBtn === correctChoice) {
+    rightOrWrong.textContent = "Correct!";
+  } else {
+    rightOrWrong.textContent = "Incorrect!";
+    seconds -= 10;
+  }
+  questionIndex++;
+  nextQuestion();
+}
+// TA helped modified showQuestion, nextQuestion and showChoice
+// Show Question function
+var showQuestion = function () {
+  var currentQuest = questions[questionIndex].question;
+  questEl.textContent = currentQuest;
+};
 
-        // Show Next Question Function
-        function nextQuestion() {
-            if (questionIndex < questions.length) {
-              questionIndex++;
-              showQuestion();
-              showChoice();
-            } else {
-              clearInterval(timerInterval);
-              endScreen();
-            }
-          }
-        // Show choices Function
-         // TA and Sub Instuctor helped with code  below
-        var showChoice = function () {
-            choicesEl.innerHTML = "";
-            for (var i = 0; i < questions[questionIndex].choices.length; i++) {
-                var newChoice = document.createElement("div");
-                choicesEl.appendChild(newChoice);
-                var choiceBtn = document.createElement("button");
-                choiceBtn.textContent = questions[questionIndex].choices[i];
-                choicesEl.appendChild(choiceBtn);
-            }
-            choicesEl.addEventListener("click", nextQuestion);
-            checkSelection();
-          }
-  
-          function showScore() {
-            var finishedScore = JSON.parse(localStorage.getItem("highScore"))
-            var createLi = document.createElement("li");
-            createLi.textContent = finishedScore.highScore.initials  + " : " + finishedScore.score;
-            endEl.appendChild(createLi);
-            highScoreEl();
-          }
+// Show Next Question Function
+function nextQuestion() {
+  if (questionIndex < questions.length) {
+    showQuestion();
+    showChoice();
+  } else {
+    clearInterval(timerInterval);
+    endScreen();
+  }
+}
+// Show choices Function
+// TA (Sean) Sub Instuctor (Vito) and Tutor David helped modify code all three functions below
+var showChoice = function () {
+  choicesEl.innerHTML = "";
+  for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+    var newChoice = document.createElement("div");
+    choicesEl.appendChild(newChoice);
+    var choiceBtn = document.createElement("button");
+    choiceBtn.textContent = questions[questionIndex].choices[i];
+    choiceBtn.addEventListener("click", checkSelection);
+    choicesEl.appendChild(choiceBtn);
+  }
+};
+// local storage 
+function showScore() {
+  var finishedScore = JSON.parse(localStorage.getItem("highScore"));
+  console.log(finishedScore[0].initials);
+  for (var i = 0; i < finishedScore.length; i++) {
+    var createLi = document.createElement("li");
+    createLi.textContent = finishedScore[i].initials + " : " + finishedScore[i].score;
+    endEl.appendChild(createLi);
+  }
+}
 
-
-          var highScoreEl = function() {
-            var highScore = {
-                initials: inputInitials.value,
-                score: seconds
-            }
-            localStorage.setItem("highScore", (JSON.stringify(highScore)))
-          }
-          submitBtn.addEventListener("click", showScore);
-            init();
+function saveHighScore(event) {
+  event.preventDefault();
+  var existingScores = JSON.parse(localStorage.getItem("highScore")) || [];
+  var highScore = {
+    initials: inputInitials.value,
+    score: seconds,
+  };
+  existingScores.push(highScore);
+  localStorage.setItem("highScore", JSON.stringify(existingScores));
+  showScore();
+}
+submitBtn.addEventListener("click", saveHighScore);
+init();
