@@ -6,6 +6,7 @@ Created a Javascript quiz using HTML, CSS and JS. This quiz will present five di
 
 ## Visual 
 
+https://user-images.githubusercontent.com/127566404/231929589-6063548e-17a0-41c9-9b9f-f4337d94ac29.mp4
 
 ## Credits
 
@@ -16,4 +17,4 @@ UNC Chapel Hill Fullstack Bootcamp
 MIT
 
 ## Note 
-Received help from Instructor Joshua Bodham 
+Received assistance from TA Sean, Sub Instrutor Vito and Tutor David on certain code sections.
