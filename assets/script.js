@@ -23,9 +23,9 @@ var questionIndex = 0;
 var endEl = document.querySelector("#end-game");
 var finalScore = document.querySelector(".score");
 var score = 0;
-// var storedScore = JSON.parse(localStorage.getItem("score")) || [];
 var inputInitials = document.querySelector("#initials");
 var submitBtn = document.querySelector(".submit");
+var playBtn = document.querySelector(".playAgain");
 
 //Reset
 function init() {
@@ -69,9 +69,6 @@ var questions = [
   },
 ];
 
-// for (var i = 0; i < questions.length; i++) {
-//     questEl.textContent
-// }
 
 // Show and hide screens
 function startScreen() {
@@ -89,9 +86,9 @@ function gameScreen() {
   gameEl.style.display = "block";
   questEl.style.display = "block";
   endEl.style.display = "none";
-  // nextBtn.style.display = "block";
-  showChoice();
+
   showQuestion();
+  showChoice();
   setTime();
 }
 
@@ -100,7 +97,6 @@ function endScreen() {
   startPage.style.display = "none";
   gameEl.style.display = "none";
   endEl.style.display = "block";
-  // nextBtn.style.display = "none";
 }
 
 // Event Listener for button
@@ -118,7 +114,7 @@ function showRemainder() {
 function sendMessage() {
   timeEl.textContent = "Times Up";
 }
-
+// set time interval
 function setTime() {
   showTimeLeft();
   timerInterval = setInterval(function () {
@@ -177,7 +173,7 @@ var showChoice = function () {
     choicesEl.appendChild(choiceBtn);
   }
 };
-// local storage 
+// local storage modified with Tutor
 function showScore() {
   var finishedScore = JSON.parse(localStorage.getItem("highScore"));
   console.log(finishedScore[0].initials);
@@ -187,7 +183,7 @@ function showScore() {
     endEl.appendChild(createLi);
   }
 }
-
+// local storage modified with Tutor
 function saveHighScore(event) {
   event.preventDefault();
   var existingScores = JSON.parse(localStorage.getItem("highScore")) || [];
@@ -200,4 +196,6 @@ function saveHighScore(event) {
   showScore();
 }
 submitBtn.addEventListener("click", saveHighScore);
+
+
 init();

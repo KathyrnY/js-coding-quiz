@@ -84,8 +84,13 @@ float: right;
     transition: .4s;
 }
 
-div newChoice {
-background-color: red;
-color: blue;
-margin: 1rem;
+.playAgain {
+    background-color: brown;
+    border-radius: 5px;
+    margin-top: 2rem;
+}
+
+.playAgain:hover {
+    background-color: darkgrey;
+    transition: .4s;
 }
